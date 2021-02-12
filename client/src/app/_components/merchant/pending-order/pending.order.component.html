@@ -1,0 +1,53 @@
+<div class="card">
+    <div class="card-header pb-3">
+        <div class="media align-items-center">
+            <h6 class="mb-0">Pending Order</h6>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="col-12 pt-3 text-center">
+            <div *ngIf="gettingOrder" class="col-12 pt-3 text-center">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+            <ng-container *ngIf="!gettingOrder && orders.length<1">
+                <p class="text-muted">No pending Order to show</p>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="orders.length>0">
+            <table class="table table-hover table-striped" style="width: 100%">
+                <thead>
+                <tr>
+                    <th><b>Order Id </b></th>
+                    <th><b>Order Date </b></th>
+                    <th><b>Order Time</b></th>
+                    <th><b> Conformation </b></th>
+                    <th><b></b></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="margin-bottom: 10px" *ngFor="let data of orders;"
+                    [style.background-color]="color[data.conformation === true || data.conformation === 'true']">
+                    <td>{{data?._id}}</td>
+                    <td>{{data?.createdAt | date:'MMM d, y'}}</td>
+                    <td>{{data?.createdAt | date:'h:mm a'}}</td>
+                    <td *ngIf="data.conformation !== true && data.conformation !== 'true'"><i style="font-size: 15px"
+                                                                                              class="text-danger fas fa-times-circle"></i>
+                    </td>
+                    <td *ngIf="data.conformation === true || data.conformation === 'true'"><i style="font-size: 15px"
+                                                                                              class="text-success fas fa-check-circle"></i>
+                    </td>
+                    <td>
+                    <td>
+                        <button style="margin-left: 20px" [routerLink]="['view/'+ data?._id]" class="btn btn-primary">
+                            View Order
+                        </button>
+
+                    </td>
+                </tr>
+                </tbody>
+
+
+            </table>
+        </ng-container>
+    </div>
+</div>

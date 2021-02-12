@@ -1,0 +1,180 @@
+<ng-container *ngIf="loaderItem">
+    <i class="fa fa-spinner fa-spin"></i>
+</ng-container>
+<ng-container *ngIf="!loaderItem">
+    <div class="card">
+        <div class="card-body">
+            <form [formGroup]="merchantForm" id="my-form" (ngSubmit)="submitForm()" >
+                <ng-container *ngIf="authStorage.getRole()==='merchant'">
+                    <div class="form-group">
+                        <label for="name">name</label><input name="name" required="required"
+                                                             formControlName="name" type="Text" class="form-control"
+                                                             id="name"
+                                                             placeholder="merchant Name" [ngClass]="{
+                'is-invalid': submit && f.name.errors
+              }"/>
+                        <div *ngIf="submit && f.name.errors" class="invalid-feedback">
+                            <div *ngIf="f.name.errors.required">Merchant name is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shopName">Shop Name</label><input name="shopName" required="required"
+                                                                      formControlName="shopName" type="Text"
+                                                                      class="form-control"
+                                                                      id="shopName"
+                                                                      placeholder="Shop Name" [ngClass]="{
+                'is-invalid': submit && f.shopName.errors
+              }"/>
+                        <div *ngIf="submit && f.shopName.errors" class="invalid-feedback">
+                            <div *ngIf="f.shopName.errors.required">Shop name is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">phone</label><input name="phone" required="required"
+                                                               formControlName="phone" type="Text" class="form-control"
+                                                               id="phone"
+                                                               placeholder="phone" [ngClass]="{
+                'is-invalid': submit && f.phone.errors
+              }"/>
+                        <div *ngIf="submit && f.phone.errors" class="invalid-feedback">
+                            <div *ngIf="f.phone.errors.required">phone is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pinCode">pinCode </label><input name="pinCode" required="required"
+                                                                    formControlName="pinCode" type="Text"
+                                                                    class="form-control"
+                                                                    id="pinCode"
+                                                                    placeholder="pin Code" [ngClass]="{
+                'is-invalid': submit && f.pinCode.errors
+              }"/>
+                        <div *ngIf="submit && f.pinCode.errors" class="invalid-feedback">
+                            <div *ngIf="f.pinCode.errors.required">pinCode is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="area">Area</label><input name="area" required="required"
+                                                             formControlName="area" type="Text" class="form-control"
+                                                             id="area"
+                                                             placeholder="area" [ngClass]="{
+                'is-invalid': submit && f.area.errors
+              }"/>
+                        <div *ngIf="submit && f.area.errors" class="invalid-feedback">
+                            <div *ngIf="f.area.errors.required">area is required</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <address>
+                            <strong>View In Map:</strong><br>
+                            <a [href]="mapLink" target="_blank">{{mapLink}}</a>
+                        </address>
+                    </div>
+                    <div class="form-group">
+                        <label for="landmark">Landmark</label><input name="landmark"
+                                                                     formControlName="landmark" type="Text"
+                                                                     class="form-control"
+                                                                     id="landmark"
+                                                                     placeholder="landmark"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="city">City</label><input name="city"
+                                                             formControlName="city" type="Text" class="form-control"
+                                                             id="city"
+                                                             placeholder="city"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label><input name="state"
+                                                               formControlName="state" type="Text" class="form-control"
+                                                               id="state"
+                                                               placeholder="state"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">country</label><input name="country"
+                                                                   formControlName="country" type="Text"
+                                                                   class="form-control"
+                                                                   id="country"
+                                                                   placeholder="country"/>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="authStorage.getRole()==='admin'">
+                    <div class="form-group">
+                        <label for="1name1">name</label><input name="1name" required="required"
+                                                               formControlName="name" type="Text" class="form-control"
+                                                               id="1name1" disabled
+                                                               placeholder="merchant Name"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="1shopName">Shop Name</label><input disabled name="1shopName" required="required"
+                                                                       formControlName="shopName" type="Text"
+                                                                       class="form-control"
+                                                                       id="1shopName"
+                                                                       placeholder="Shop Name"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="1phone">phone</label><input disabled name="1phone" required="required"
+                                                                formControlName="phone" type="Text" class="form-control"
+                                                                id="1phone"
+                                                                placeholder="phone"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="1pinCode">pinCode </label><input disabled name="1pinCode" required="required"
+                                                                     formControlName="pinCode" type="Text"
+                                                                     class="form-control"
+                                                                     id="1pinCode"/>
+                    </div>
+                    <div class="form-group">
+                        <address>
+                            <strong>View In Map:</strong><br>
+                            <a [href]="mapLink" target="_blank">{{mapLink}}</a>
+                        </address>
+                    </div>
+                    <div class="form-group">
+                        <label for="1area">Area</label><input disabled name="1area" required="required"
+                                                              formControlName="area" type="Text" class="form-control"
+                                                              id="1area"
+                                                              placeholder="area"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="1landmark">Landmark</label><input disabled name="1landmark"
+                                                                      formControlName="landmark" type="Text"
+                                                                      class="form-control"
+                                                                      id="1landmark"
+                                                                      placeholder="landmark"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="1city">City</label><input disabled name="1city"
+                                                              formControlName="city" type="Text" class="form-control"
+                                                              id="1city"
+                                                              placeholder="city"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="1state">State</label><input disabled name="1state"
+                                                                formControlName="state" type="Text" class="form-control"
+                                                                id="1state"
+                                                                placeholder="state"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="1country">country</label><input disabled name="1country"
+                                                                    formControlName="country" type="Text"
+                                                                    class="form-control"
+                                                                    id="1country"
+                                                                    placeholder="country"/>
+                    </div>
+                </ng-container>
+            </form>
+        </div>
+        <ng-container *ngIf="authStorage.getRole()==='merchant'">
+            <div class="modal-footer">
+                <button [disabled]="loader" form="my-form" id="newTestForm" type="submit"
+                        class="btn btn-sm btn-primary"> Save
+                    <i *ngIf="loader" class="fa fa-spinner fa-spin"></i>
+                </button>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>
+

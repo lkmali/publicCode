@@ -1,0 +1,78 @@
+<div class="navbar navbar-expand-lg navbar-light">
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link">
+                <div class="notification-wrapper">
+                    <div class="notification-btn" (click)="openNotification(!showNotification, $event)">
+                                    <span id="group">
+                                        <span class="fa-stack fa-2x">
+                                            <i class="fa fa-bell fa-stack-1x fa-inve">
+                                            </i></span>
+                 <span class="badge numberBadge-light badge-light ">{{count}}</span>
+               </span>
+                    </div>
+                    <div *ngIf="showNotification" class="notification-content"
+                         (clickOutside)="openNotification(false, $event)"
+                         [exclude]="'.notification-btn'">
+                        <div class="notification-header">
+                            <span class="label">Notification</span>
+                        </div>
+                        <table class="table table-hover table-striped" style="width: 100%">
+                            <tbody *ngFor="let data of  notificationList; let i = index;">
+                            <tr>
+                                <td colspan="12" class="proptype2" style="vertical-align:middle;">
+                                                <span class="title"
+                                                      style="font-weight:bold;"> {{data.title}} </span>
+                                    <span class="pull-right">
+					  <button id="deleteNotification" (click)="closeNotification(i)"
+                              class="btn btn-sm far fa-trash-alt text-danger">
+                        </button>
+					</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="12" rowspan="2" style="text-align:left;">
+                                    <p><a [href]="data.link">view</a></p>
+                                    <p> {{data.body}}</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class=" sliderbox" [ngClass]="status ? 'open' : ''">
+    <div class="mobile-view">
+        <ng-container *ngIf="role==='admin'">
+            <app-admin-sidebar></app-admin-sidebar>
+        </ng-container>
+        <ng-container *ngIf="role==='merchant'">
+            <app-merchant-sidebar></app-merchant-sidebar>
+        </ng-container>
+    </div>
+    <button (click)="slidebar()" [ngClass]="status_icon ? 'change' : ''"
+            class="btn btn-light sidebutton">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+    </button>
+</div>
+<div class="row">
+    <div class="col-sm-2 d-none d-sm-block">
+        <div class="navbar-cardb ">
+            <ng-container *ngIf="role==='admin'">
+                <app-admin-sidebar></app-admin-sidebar>
+            </ng-container>
+            <ng-container *ngIf="role==='merchant'">
+                <app-merchant-sidebar></app-merchant-sidebar>
+            </ng-container>
+        </div>
+    </div>
+    <div class="col-sm-10">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+

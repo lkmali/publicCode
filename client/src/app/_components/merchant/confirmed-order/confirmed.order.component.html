@@ -1,0 +1,48 @@
+<div class="card">
+    <div class="card-header pb-3">
+        <div class="media align-items-center">
+            <h6 class="mb-0">Confirmed Order</h6>
+        </div>
+    </div>
+    <div class="card-body pt-0">
+        <div class="col-12 pt-3 text-center">
+            <div *ngIf="orders.length<1" class="col-12 pt-3 text-center">
+                <i *ngIf="gettingOrder" class="fa fa-spinner fa-spin"></i>
+                <ng-container *ngIf="!gettingOrder">
+                    <p class="text-muted">No confirmed Order to show</p>
+                </ng-container>
+            </div>
+        </div>
+
+        <ng-container *ngIf="orders.length>0">
+            <table class="table table-hover table-striped" style="width: 100%">
+                <thead>
+                <tr>
+                    <th><b>Order Id </b></th>
+                    <th><b>Order Date </b></th>
+                    <th><b>Order Time</b></th>
+                    <th><b>Status</b></th>
+                    <th><b></b></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr style="margin-bottom: 10px" *ngFor="let data of orders; let i = index;"
+                    [style.background-color]="color[data?.merchant.status]">
+                    <td>{{data?._id}}</td>
+                    <td>{{data?.createdAt | date:'MMM d, y'}}</td>
+                    <td>{{data?.createdAt | date:'h:mm a'}}</td>
+                    <td>{{data?.merchant.status}}</td>
+                    <td>
+                        <button style="margin-left: 20px" [routerLink]="['view/'+ data?._id]" class="btn btn-primary">
+                            View Order
+                        </button>
+
+                    </td>
+                </tr>
+                </tbody>
+
+
+            </table>
+        </ng-container>
+    </div>
+</div>

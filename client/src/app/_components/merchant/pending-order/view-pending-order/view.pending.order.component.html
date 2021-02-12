@@ -1,0 +1,106 @@
+<div class="card">
+    <div class="card-header pb-3">
+        <div class="media align-items-center">
+            <h6 class="mb-0">Conform Order</h6>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="col-12 pt-3 text-center">
+            <ng-container *ngIf="gettingOrder">
+                <i class="fa fa-spinner fa-spin"></i>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="!gettingOrder">
+            <table class=" table table-condensed">
+                <tbody *ngFor="let merchantItem of merchantCart;  let i=index">
+                <tr>
+                    <td colspan="12" class="proptype2" style="vertical-align:middle;">
+                        <span class="title ng-binding"
+                              style="font-weight:bold;">{{merchantItem.cart?.item?.name}}
+                            ({{merchantItem?.cart?.weight}})</span>
+                        <ng-container *ngIf="!conformation">
+                                    <span class="pull-right">
+                               <button type="button"
+                                       (click)="stock(i, !merchantItem.isDeleted)"
+                                       [style.background-color]=" color[!merchantItem.isDeleted]"
+                                       class="badge badge-secondary mt-2">{{ merchantItem.isDeleted ? "Available" : "Not Available"  }}</button>
+					</span>
+                        </ng-container>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="1" rowspan="2" style="width:100px;text-align:center;">
+                        <ng-container *ngIf="!merchantItem.cart?.item?.preview">
+                            <img src="../../../../../assets/images/avatar-default.png"
+                                 class="img-thumbnail img-responsive"
+                                 style="top:5px;left:2px;box-shadow:0px 0px 1px 1px;height:100px;"
+                                 alt="user"/>
+                        </ng-container>
+                        <ng-container *ngIf="merchantItem.cart?.item?.preview">
+                            <img class="img-thumbnail img-responsive"
+                                 style="top:5px;left:2px;box-shadow:0px 0px 1px 1px;height:100px;"
+                                 [src]="getImageUrl(merchantItem.cart?.item?.preview)"
+                                 alt="No results found">
+                        </ng-container>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="12" style="padding:0px;vertical-align:top;border-top: 0px solid #eeeeee;">
+                        <table class="table table-condensed table-bordered"
+                               style="font-size:12px;margin:0px;background:#fff;">
+                            <tbody>
+                            <tr>
+                                <td class="headtitle">Quantity</td>
+                                <td colspan="3" class="headtitle">Your Price</td>
+                                <td class="headtitle">Stock</td>
+                            </tr>
+                            <!-- ngRepeat: opt in i.prooptions -->
+                            <tr>
+                                <td class="ng-binding">{{merchantItem.cart.quantity}}</td>
+                                <td colspan="3" class="ng-binding">
+                                    <ng-container *ngIf="!conformation">
+                                        <search-text name="price"
+                                                     (changeMethod)="onPriceChange(merchantItem.cart,i, $event.target.value)"
+                                                     (keyupMethod)="onPriceChange(merchantItem.cart, i, $event.target.value)"
+                                                     type="number"
+                                                     class="form-control"
+                                                     id="price"
+                                                     [value]="merchantItem.price"
+                                                     placeholder="price"></search-text>
+                                        <div *ngIf="inputBoxError[i]"
+                                             class="error-feedback">
+                                            <div> {{inputBoxError[i]}}</div>
+                                        </div>
+                                    </ng-container>
+                                    <ng-container *ngIf="conformation">
+                                        {{merchantItem.price}}
+                                    </ng-container>
+                                </td>
+                                <td class="ng-binding">
+                        <span [style.background-color]=" color[merchantItem.isDeleted]"
+                              class="badge badge-secondary mt-2">{{ merchantItem.isDeleted ? "Not Available" : "Available"  }}</span>
+                                </td>
+
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </ng-container>
+    </div>
+
+    <div class="modal-footer">
+        <ng-container *ngIf="!conformation && !gettingOrder">
+            <button [disabled]="submit" id="newTestForm" type="submit"
+                    (click)="conformOrder()"
+                    class="btn btn-sm btn-primary"> Save
+                <i *ngIf="submit" class="fa fa-spinner fa-spin"></i>
+            </button>
+        </ng-container>
+
+    </div>
+</div>

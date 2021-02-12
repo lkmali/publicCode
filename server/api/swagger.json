@@ -1,0 +1,2356 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "MTC API Documentation",
+    "version": "1.0.0",
+    "title": "MTC API Documentation"
+  },
+  "host": "localhost:10010",
+  "basePath": "/api",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "parameters": {
+    "clientId": {
+      "name": "clientId",
+      "type": "string",
+      "in": "header",
+      "required": true,
+      "description": "APIs are secured by clientId."
+    },
+    "clientSecret": {
+      "name": "clientSecret",
+      "type": "string",
+      "in": "header",
+      "required": true,
+      "description": "clientSecret"
+    },
+    "guest": {
+      "name": "guest",
+      "type": "string",
+      "in": "header",
+      "required": true,
+      "description": "guest id"
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/account/sendOtp": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "API for send Otp",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "sendOtp",
+        "description": "API for send Otp\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "phone"
+              ],
+              "properties": {
+                "phone": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " User validate Successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/account/verifyPhone": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "summary": "API for verify MobileNo",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "verifyMobileNo",
+        "description": "set the password by New User\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "phone",
+                "verifyCode"
+              ],
+              "properties": {
+                "phone": {
+                  "type": "string"
+                },
+                "verifyCode": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " User validate Successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/user/{action}": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "put": {
+        "tags": [
+          "Account"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for delete and restore  user  ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "userAction",
+        "description": "API for delete and restore  user   \n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "action",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "activate",
+              "deactivate"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "status change successfully",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        },
+        {
+          "$ref": "#/parameters/guest"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Account"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get users",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getUsers",
+        "description": "API for get users\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " get users successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Account"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for updateUser User",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "updateUser",
+        "description": "updateUser\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string",
+                  "enum": [
+                    "merchant",
+                    "deliveryBoy"
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " Register user successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/open/category": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        },
+        {
+          "$ref": "#/parameters/guest"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Category"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get Category",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getCategory",
+        "description": "API for get Category\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "searchText",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "pinCode",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " get Category successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/open/item": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        },
+        {
+          "$ref": "#/parameters/guest"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Item"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get Item",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getItem",
+        "description": "API for get Item\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "categoryId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "searchText",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "pinCode",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " get Category successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/product/image/{type}/{imageType}/{id}": {
+      "get": {
+        "tags": [
+          "Image"
+        ],
+        "summary": "API for get Image ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "imageStream",
+        "description": "API for get Image \n",
+        "produces": [
+          "image/png"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "type",
+            "required": true,
+            "enum": [
+              "category",
+              "item"
+            ],
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "imageType",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/address": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Address"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for add Address",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "addAddress",
+        "description": "API for add Address\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "name",
+                "mobileNo",
+                "pinCode"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "mobileNo": {
+                  "type": "string"
+                },
+                "pinCode": {
+                  "type": "string"
+                },
+                "addressType": {
+                  "type": "string"
+                },
+                "default": {
+                  "type": "boolean"
+                },
+                "houseNo": {
+                  "type": "string"
+                },
+                "area": {
+                  "type": "string"
+                },
+                "landmark": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "mapLocation": {
+                  "type": "object"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " Register user successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Address"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get Address",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getAddress",
+        "description": "API for get Address\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " get Category successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/user/details": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for add user Details",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "addUserDetails",
+        "description": "API for add Details\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "phone",
+                "name",
+                "pinCode",
+                "mapLocation"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "phone": {
+                  "type": "string"
+                },
+                "pinCode": {
+                  "type": "string"
+                },
+                "mapLocation": {
+                  "type": "string"
+                },
+                "shopName": {
+                  "type": "string"
+                },
+                "area": {
+                  "type": "string"
+                },
+                "landmark": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User updated Success Fully  ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get Details",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getUserDetails",
+        "description": "API for get Details\n",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": " get Category successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/address/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "delete": {
+        "tags": [
+          "Address"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for deleteAddress  ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "deleteAddress",
+        "description": "API for deleteAddress \n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "status change successfully",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Address"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for update Address",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "updateAddress",
+        "description": "API for update Address\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "mobileNo": {
+                  "type": "string"
+                },
+                "pinCode": {
+                  "type": "string"
+                },
+                "addressType": {
+                  "type": "string"
+                },
+                "default": {
+                  "type": "boolean"
+                },
+                "houseNo": {
+                  "type": "string"
+                },
+                "area": {
+                  "type": "string"
+                },
+                "landmark": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "mapLocation": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " Register user successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/open/cart": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        },
+        {
+          "$ref": "#/parameters/guest"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for add Cart",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "addCart",
+        "description": "API for add Cart\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "quantity",
+                "item",
+                "propertyId"
+              ],
+              "properties": {
+                "quantity": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "item": {
+                  "type": "string"
+                },
+                "propertyId": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " Register user successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for getCart",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getCart",
+        "description": "API for get Cart\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "item",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " get Cart successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/open/fcm": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        },
+        {
+          "$ref": "#/parameters/guest"
+        }
+      ],
+      "post": {
+        "tags": [
+          "FCM"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for add FCM TOKEN",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "addFcmToken",
+        "description": "API for add TOKEN\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "token"
+              ],
+              "properties": {
+                "token": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " Register user successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/open/skip": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        },
+        {
+          "$ref": "#/parameters/guest"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Cart"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for transferCartData",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getCart",
+        "description": "API for get Cart\n",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": " get Cart successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/open/offerImage": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        },
+        {
+          "$ref": "#/parameters/guest"
+        }
+      ],
+      "get": {
+        "tags": [
+          "OfferImage"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for getOfferImage",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getOfferImage",
+        "description": "API for get Cart\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "item",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " get Item Image successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/order/invoice/{orderId}": {
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "summary": "API for download invoice ",
+        "consumes": [
+          "application/json"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "operationId": "downloadOrderInvoice",
+        "description": "API for download invoice \n",
+        "produces": [
+          "application/pdf"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orderId",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/order": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for create order",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "createOrder",
+        "description": "API for create Order\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "addressId",
+                "cart"
+              ],
+              "properties": {
+                "addressId": {
+                  "type": "string"
+                },
+                "cart": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/OrderCart"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " Register user successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for getOrder",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getOrder",
+        "description": "API for get Order\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "id",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " get Cart successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/order/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "put": {
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for update order",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "updateOrder",
+        "description": "API for update Order\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "addressId": {
+                  "type": "string"
+                },
+                "cart": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/UpdateOrderCart"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/order/cancel/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "put": {
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for cancel order",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "cancelOrderStatus",
+        "description": "API for cancel Order Order\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": " Order Cancel successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/order/reorder/{id}": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "put": {
+        "tags": [
+          "Order"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for re order",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "reOrder",
+        "description": "API for reorder Order\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "reOrder successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/merchant/item/merchant": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "post": {
+        "tags": [
+          "MerchantItem"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for add merchant item ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "addMerchantItemsByMerchant",
+        "description": "API for add merchant item\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MerchantItem"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for update merchant item ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "updateMerchantItemsByMerchant",
+        "description": "API for update merchant item\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "updatedRequest": {
+                  "required": [
+                    "isDeleted"
+                  ],
+                  "properties": {
+                    "isDeleted": {
+                      "description": "isDeleted false for Available, isDeleted true for not Available ",
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "MerchantItem"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get merchant item ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getMerchantItemsByMerchant",
+        "description": "API for get merchant item\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "categoryId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "searchText",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "merchantCategory",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/merchant/item/unselected/merchant": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "get": {
+        "tags": [
+          "MerchantItem"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get unselected merchant item ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getUnselectedMerchantItemByMerchant",
+        "description": "API for get unselected merchant item\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "categoryId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "searchText",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/merchant/item/delete/merchant": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "put": {
+        "tags": [
+          "MerchantItem"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for delete merchant item ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "deleteMerchantItemsByMerchant",
+        "description": "API for delete merchant item\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/merchant/item/merchant/price": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "put": {
+        "tags": [
+          "MerchantItem"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for update merchant item price",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "updateMerchantItemsPriceByMerchant",
+        "description": "API for delete merchant item\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "merchantItem": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/merchant/category/merchant": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "post": {
+        "tags": [
+          "MerchantCategory"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for add merchant category ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "addMerchantCategoriesByMerchant",
+        "description": "API for add merchant category\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "MerchantCategory"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for update merchant category ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "updateMerchantCategoriesByMerchant",
+        "description": "API for update merchant category\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "updatedRequest": {
+                  "required": [
+                    "isDeleted"
+                  ],
+                  "properties": {
+                    "isDeleted": {
+                      "description": "isDeleted false for Available, isDeleted true for not Available ",
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "MerchantCategory"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for getMerchantCategoriesByMerchant ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getMerchantCategoriesByMerchant",
+        "description": "API for get merchant category\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "categoryId",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "searchText",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/merchant/category/unselected/merchant": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "get": {
+        "tags": [
+          "MerchantCategory"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get unselected merchant category ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getUnselectedMerchantCategoriesByMerchant",
+        "description": "API for get unselected merchant category\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "searchText",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/merchant/category/delete/merchant": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "put": {
+        "tags": [
+          "MerchantCategory"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for delete merchant category ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "deleteMerchantCategoriesByMerchant",
+        "description": "API for delete merchant category\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ids": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/merchantCart/merchant": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "get": {
+        "tags": [
+          "MerchantCart"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get merchant get Pending Order ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getPendingOrder",
+        "description": "API for get merchant get Pending Order \n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "orderId",
+            "minimum": 0,
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/merchantCart/conform": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "put": {
+        "tags": [
+          "MerchantCart"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for conform merchant cart item ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "conformAllItemByMerchant",
+        "description": "API for update merchant item\n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "orderId",
+                "merchantCart"
+              ],
+              "properties": {
+                "orderId": {
+                  "type": "string"
+                },
+                "merchantCart": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/UpdateMerchantCart"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/orderDelivery/merchant": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/clientId"
+        },
+        {
+          "$ref": "#/parameters/clientSecret"
+        }
+      ],
+      "get": {
+        "tags": [
+          "OrderDelivery"
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "summary": "API for get confrom order ",
+        "consumes": [
+          "application/json"
+        ],
+        "operationId": "getConformedOrder",
+        "description": "API for get conform order \n",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "minimum": 0,
+            "required": false,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "minimum": 0,
+            "required": false,
+            "type": "number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "minimum": 0,
+            "maximum": 20,
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "update Order successfully ",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "OrderCart": {
+      "description": "cart Id",
+      "required": [
+        "id"
+      ],
+      "properties": {
+        "id": {
+          "description": "cart Id",
+          "type": "string"
+        }
+      }
+    },
+    "UpdateOrderCart": {
+      "description": "cart Order",
+      "required": [
+        "id",
+        "quantity"
+      ],
+      "properties": {
+        "id": {
+          "description": "cart Id",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "cart Id",
+          "type": "number"
+        }
+      }
+    },
+    "UpdateMerchantCart": {
+      "description": "merchant Cart",
+      "required": [
+        "id",
+        "price"
+      ],
+      "properties": {
+        "id": {
+          "description": "Merchant Cart Id",
+          "type": "string"
+        },
+        "price": {
+          "description": "price",
+          "type": "number"
+        },
+        "isDeleted": {
+          "description": "isDeleted false for Available, isDeleted true for not Available ",
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

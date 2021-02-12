@@ -1,0 +1,73 @@
+<ng-container>
+    <div class="card">
+        <div class="card-header pb-3">
+            <h6 class="modal-title" id="modelTypeTitle">Category</h6>
+        </div>
+        <ng-container>
+            <div class="card-body">
+                <form [formGroup]="categoryForm" id="my-form" (ngSubmit)="submitForm()">
+                    <div class="form-group">
+                        <input name="meetingData_meetingName" required="required"
+                               formControlName="categoryName" type="Text" class="form-control" id="categoryName"
+                               placeholder="category Name" [ngClass]="{
+                'is-invalid': submit && f.categoryName.errors
+              }"/>
+                        <div *ngIf="submit && f.categoryName.errors" class="invalid-feedback">
+                            <div *ngIf="f.categoryName.errors.required">Category name is required</div>
+                        </div>
+                    </div>
+                    <nav>
+                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                            <!--    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+                                  aria-controls="nav-home" aria-selected="true">Public Info</a>-->
+                            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                               role="tab"
+                               aria-controls="nav-home" aria-selected="true">Description</a>
+                      <!--      <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                               role="tab"
+                               aria-controls="nav-profile" aria-selected="false">Extra Field</a>-->
+                            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact"
+                               role="tab"
+                               aria-controls="nav-contact" aria-selected="false">Preview</a>
+                        </div>
+                    </nav>
+                    <div class="tab-content" id="nav-tabContent">
+                        <div class="tab-pane fade show active p-2" id="nav-home" role="tabpanel"
+                             aria-labelledby="nav-home-tab">
+                            <div class="form-group mt-3">
+                              <textarea rows="4" cols="10"
+                                        formControlName="description"
+                                        [placeholder]="'description'"
+                                ></textarea>
+                            </div>
+                            <!--   <app-public-info [metaInfo]="metaInfo" [webinarDescription]="webinarDescription" #appPublicInfo>
+                               </app-public-info>-->
+                        </div>
+                        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+                          <div class="col-12 col-lg-5 pt-3  mb-4 mb-lg-0">
+                            <div class="profile-pic px-2 mb-3">
+                              <ng-container *ngIf="!previewImage">
+                                <img src="../../../../../assets/images/avatar-default.png" class=" " alt="user"/>
+                              </ng-container>
+                              <ng-container *ngIf="previewImage">
+                                <img id="userPicUrl" [src]="previewImage" class=" " alt="user"/>
+                              </ng-container>
+                            </div>
+                            <div class="custom-file">
+                              <input type="file" class="custom-file-input" id="file"  (change)="onFileChange($event)">
+                              <!-- <label class="custom-file-label" for="customFile">Company logo</label> -->
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button [disabled]="loader" form="my-form" id="newTestForm" type="submit"
+                        class="btn btn-sm btn-primary"> Save
+                    <i *ngIf="loader" class="fa fa-spinner fa-spin"></i>
+                </button>
+            </div>
+        </ng-container>
+    </div>
+</ng-container>

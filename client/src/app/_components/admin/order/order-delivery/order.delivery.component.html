@@ -1,0 +1,97 @@
+<div>
+    <div class="row col-md-6">
+        <ng-container *ngIf="isConformOrderDeliveryButtonView">
+            <button style="margin: 10px" type="submit"
+                    [disabled]="buttonFlag['sendMessageToMerchant'] || false"
+                    class="btn btn-primary"
+                    (click)="conformOrder('sendMessageToMerchant')">
+                <i
+                        *ngIf="buttonFlag['sendMessageToMerchant'] || false"
+                        class="fa fa-spinner fa-spin"></i>
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                <span class="d-none d-lg-inline-block ml-1">
+                            Confirm Delivery </span></button>
+        </ng-container>
+        <ng-container *ngIf="isDeliveryButtonView">
+            <button style="margin: 10px" type="submit"
+                    [disabled]="buttonFlag['delivered'] || false"
+                    class="btn btn-primary"
+                    (click)="orderDeliverySuccessfully('delivered')">
+                <i
+                        *ngIf="buttonFlag['sendMessageToMerchant'] || false"
+                        class="fa fa-spinner fa-spin"></i>
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                <span class="d-none d-lg-inline-block ml-1">
+                            Delivered </span></button>
+        </ng-container>
+    </div>
+    <div class="col-sm-12">
+        <table class=" table table-condensed">
+            <tbody *ngFor="let merchant of merchantCart; let i=index">
+            <tr>
+                <td style="vertical-align:middle;">
+                    <span class="title ng-binding" style="font-weight:bold;"> <b>{{merchant?.merchantName}}
+                        ({{merchant?.shopName}})  </b> </span>
+
+                </td>
+                <td class="proptype2" style="vertical-align:middle;">
+                    <span class="title ng-binding" style="font-weight:bold;"> <b>  MobileNO-: {{merchant?.phone}}
+                          </b> </span>
+
+                </td>
+                <td colspan="12" class="proptype2" style="vertical-align:middle;">
+                    <span class="title ng-binding" style="font-weight:bold;"> <b>
+                        Distance From User:- {{this.convertMiterToKm(merchant?.distance)}} KM    </b> </span>
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12" style="padding:0px;vertical-align:top;border-top: 0px solid #eeeeee;">
+                    <table class="table table-condensed table-bordered"
+                           style="font-size:12px;margin:0px;background:#fff;">
+                        <tbody *ngFor="let cartItem of merchant.items; let i=index">
+                        <tr>
+                            <td colspan="2" rowspan="2" style="width:100px;text-align:center;">
+                                <ng-container *ngIf="!cartItem?.cart?.item?.preview">
+                                    <img src="../../../../../assets/images/avatar-default.png"
+                                         class="img-thumbnail img-responsive"
+                                         style="top:5px;left:2px;box-shadow:0px 0px 1px 1px;height:100px;"
+                                         alt="user"/>
+                                </ng-container>
+                                <ng-container *ngIf="cartItem?.cart?.item?.preview">
+                                    <img class="img-thumbnail img-responsive"
+                                         style="top:5px;left:2px;box-shadow:0px 0px 1px 1px;height:100px;"
+                                         [src]="getImageUrl(cartItem?.cart?.item?.preview)"
+                                         alt="No results found">
+                                </ng-container>
+                            </td>
+                            <td class="headtitle">Item Name</td>
+                            <td class="headtitle">Quantity</td>
+                            <td class="headtitle">Item Price</td>
+                            <td class="headtitle">Merchant Price</td>
+                            <td class="headtitle"> Total Price</td>
+                        </tr>
+                        <tr>
+                            <td class="ng-binding">{{cartItem?.cart?.item?.name}}({{cartItem?.cart?.weight}})</td>
+                            <td class="ng-binding">{{cartItem?.cart?.quantity}}</td>
+                            <td class="ng-binding">{{cartItem?.cart?.item?.price}}</td>
+                            <td class="ng-binding">{{cartItem?.itemPrice}}</td>
+                            <td class="ng-binding">{{cartItem?.itemPrice}}*{{cartItem?.cart?.quantity}}
+                                ={{cartItem?.totalAmount}}</td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+
+            <!-- <tr> -->
+            <!-- <td colspan="12"> -->
+            <!-- <span class="fa fa-info-circle fa-lg pull-right" style="color:#00ccff;padding-right:20px;"  ng-click="delproduct(item)"></span>  -->
+            <!-- <span class="fa fa-pencil fa-lg pull-right" style="color:#00ccff;padding-right:20px;"  ui-sref="app.editproduct({id:item.Id})"></span>  -->
+            <!-- </td> -->
+            <!-- </tr> -->
+            </tbody>
+        </table>
+    </div>
+</div>

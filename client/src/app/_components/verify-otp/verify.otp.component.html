@@ -1,0 +1,30 @@
+﻿<div class="container">
+    <div class="row d-flex justify-content-center mt-5">
+        <div class="col-lg-5">
+            <div class="login-form card">
+                <div class="form-header pb-0">
+                    Verify Code
+                </div>
+                <div class="custom-form-element p-3">
+                    <div class="form-group">
+                        <label for="loginemail"> Verify Code </label>
+                        <input id="loginemail" minlength="6" maxlength="6" placeholder="verifyCode"
+                               type="text"
+                               (change)="onVerifyCode()"
+                               (keyup)="onVerifyCode()"
+                               [(ngModel)]="verifyCode"
+                               class="form-control"/>
+                    </div>
+                    <div class="mt-4">
+                        <button type="submit" (click)="onSubmit()" [disabled]="!submitted"
+                                class="btn btn btn-primary w-100 mr-3"><i
+                                class="fa fa-sign-in" aria-hidden="true"></i> Submit
+                            <i *ngIf="loading"
+                               class="fa fa-spinner fa-spin"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

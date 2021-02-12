@@ -1,0 +1,10 @@
+mtc_elastic:
+  image: docker.elastic.co/elasticsearch/elasticsearch:7.10.1
+  container_name: mtc_elastic
+  environment:
+    - discovery.type=single-node
+  volumes:
+    - elastic_search_data:/usr/share/elasticsearch/data
+  ports:
+    - 9500:9300
+    - 9400:9200

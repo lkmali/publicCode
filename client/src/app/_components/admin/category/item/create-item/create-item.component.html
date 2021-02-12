@@ -1,0 +1,175 @@
+<ng-container>
+    <div class="card">
+        <div class="card-header pb-3">
+            <h6 class="modal-title" id="modelTypeTitle">Item</h6>
+        </div>
+        <ng-container>
+            <div class="card-body">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-details-tab" data-toggle="tab" href="#nav-details"
+                           role="tab"
+                           aria-controls="nav-details" aria-selected="true">Details</a>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active p-2" id="nav-details" role="tabpanel"
+                         aria-labelledby="nav-details-tab">
+                        <div class="card">
+                            <div class="card-body">
+                                <form [formGroup]="itemForm" (ngSubmit)="submitForm()">
+                                    <div class="row">
+                                        <div class="col-12 col-lg-7">
+                                            <div class="px-lg-4">
+                                                <div class="form-group">
+                                                    <label for="itemName">itemName</label><input
+                                                        name="meetingData_meetingName" required="required"
+                                                        formControlName="itemName" type="Text" class="form-control"
+                                                        id="itemName"
+                                                        placeholder="item Name" [ngClass]="{
+                'is-invalid': submit && f.itemName.errors
+              }"/>
+                                                    <div *ngIf="submit && f.itemName.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.itemName.errors.required">Item name is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="hsnCode">HsnCode</label><input
+                                                        name="meetingData_meetingName" required="required"
+                                                        formControlName="hsnCode" type="Text" class="form-control"
+                                                        id="hsnCode"
+                                                        placeholder="HSN CODE" [ngClass]="{
+                'is-invalid': submit && f.hsnCode.errors
+              }"/>
+                                                    <div *ngIf="submit && f.hsnCode.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.hsnCode.errors.required">hsnCode required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="gst">Gst</label><input name="meetingData_meetingName"
+                                                                                       required="required"
+                                                                                       formControlName="gst"
+                                                                                       type="number"
+                                                                                       class="form-control"
+                                                                                       id="gst"
+                                                                                       placeholder="gst" [ngClass]="{
+                'is-invalid': submit && f.gst.errors
+              }"/>
+                                                    <div *ngIf="submit && f.gst.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.gst.errors.required">gst is required
+                                                        </div>
+                                                        <!--    <div *ngIf="f.gst.errors.min"> gst should be positive
+                                                            </div>
+                                                            <div *ngIf="f.gst.errors.max">gst should be less then 100
+                                                            </div>-->
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="control-label text-left"
+                                                           for="quantity">Quantity </label>
+                                                    <div class="input-group">
+                                                        <input placeholder="Enter Quantity"
+                                                               class="form-control"
+                                                               formControlName="quantity"
+                                                               name="quantity" id="quantity"
+                                                               style="height:40px;min-width:60px;" type="text"
+                                                               [ngClass]="{
+                'is-invalid': submit && f.quantity.errors
+              }"/>
+                                                        <span class="input-group-addon" style="padding:0px;">
+			 <select formControlName="unit"
+                     class="custom-select">
+                    <option *ngFor="let unit of units" [value]="unit.name">{{unit.name}}</option>
+                </select>
+			</span>
+
+                                                    </div>
+                                                    <div *ngIf="submit && f.quantity.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.quantity.errors.required">Quantity is required
+                                                        </div>
+                                                        <!--    <div *ngIf="f.gst.errors.min"> gst should be positive
+                                                            </div>
+                                                            <div *ngIf="f.gst.errors.max">gst should be less then 100
+                                                            </div>-->
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="price">Price</label><input
+                                                        name="meetingData_meetingName" required="required"
+                                                        formControlName="price" type="Text" class="form-control"
+                                                        id="price"
+                                                        placeholder="price" [ngClass]="{
+                'is-invalid': submit && f.price.errors
+              }"/>
+                                                    <div *ngIf="submit && f.price.errors" class="invalid-feedback">
+                                                        <div *ngIf="f.price.errors.required">Price name is required
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="control-label text-left " for="description">Item
+                                                            Description </label>
+                                                        <textarea placeholder="Enter Description"
+                                                                  id="description"
+                                                                  formControlName="description"
+                                                                  class="form-control"
+                                                                  name="Description"
+                                                                  type="text" rows="4" required=""></textarea>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-5 pt-3  mb-4 mb-lg-0">
+                                            <label for="">Preview Image</label>
+                                            <div class="profile-pic px-2 mb-3">
+                                                <ng-container *ngIf="!previewImage">
+                                                    <img src="../../../../../../assets/images/avatar-default.png"
+                                                         class=" "
+                                                         alt="user"/>
+                                                </ng-container>
+                                                <ng-container *ngIf="previewImage">
+                                                    <img id="userPicUrl" [src]="previewImage" class=" " alt="user"/>
+                                                </ng-container>
+                                            </div>
+                                            <div class="custom-file">
+                                                <input type="file" class="custom-file-input" id="file"
+                                                       (change)="onFileChange($event)">
+                                                <!-- <label class="custom-file-label" for="customFile">Company logo</label> -->
+                                            </div>
+                                            <div *ngIf="!this.previewImage && !this.fileToUpload"
+                                                 class="error-feedback">
+                                                <div>Preview image is required</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="mt-3 px-lg-4">
+
+                                                <button [disabled]="loader" type="submit"
+                                                        class="px-4 btn btn-primary ">Save<i
+                                                        *ngIf="loader" class="fa fa-spinner fa-spin"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+                        <!--   <app-public-info [metaInfo]="metaInfo" [webinarDescription]="webinarDescription" #appPublicInfo>
+                           </app-public-info>-->
+                    </div>
+                </div>
+            </div>
+
+        </ng-container>
+    </div>
+</ng-container>

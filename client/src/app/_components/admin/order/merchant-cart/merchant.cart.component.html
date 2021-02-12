@@ -1,0 +1,125 @@
+<div>
+    <ng-container *ngIf="isMerchantButtonView">
+        <div class="row col-md-6">
+            <button style="margin: 10px" type="submit"
+                    [disabled]="buttonFlag['sendMessageToMerchant'] || false"
+                    class="btn btn-primary"
+                    (click)="createOrderDelivery('sendMessageToMerchant')">
+                <i
+                        *ngIf="buttonFlag['sendMessageToMerchant'] || false"
+                        class="fa fa-spinner fa-spin"></i>
+                <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                <span class="d-none d-lg-inline-block ml-1">
+                            Send Order to Merchant </span></button>
+        </div>
+    </ng-container>
+    <div class="col-sm-12">
+        <table class=" table table-condensed">
+            <tbody *ngFor="let cartItem of cart; let i=index">
+            <tr>
+                <td style="vertical-align:middle;">
+                    <span class="title ng-binding" style="font-weight:bold;"> <b>{{cartItem?.item?.name}}
+                        ({{cartItem.weight}}) </b> </span>
+
+                </td>
+                <td style="vertical-align:middle;">
+                    <span class="title ng-binding" style="font-weight:bold;"> <b> Price:- {{cartItem?.item?.price}} </b> </span>
+                </td>
+                <td style="vertical-align:middle;">
+                    <span class="title ng-binding"
+                          style="font-weight:bold;">  <b>Quantity:- {{cartItem.quantity}} </b> </span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="12" style="padding:0px;vertical-align:top;border-top: 0px solid #eeeeee;">
+                    <table class="table table-condensed table-bordered"
+                           style="font-size:12px;margin:0px;background:#fff;">
+                        <tbody>
+                        <tr>
+                            <ng-container *ngIf="merchants[cartItem?.item?._id]"></ng-container>
+                            <td colspan="3" [attr.rowspan]="getrowspan(merchants[cartItem?.item?._id])"
+                                style="width:100px;text-align:center;">
+                                <ng-container *ngIf="!cartItem?.item?.preview">
+                                    <img src="../../../../../assets/images/avatar-default.png"
+                                         class="img-thumbnail img-responsive"
+                                         style="top:5px;left:2px;box-shadow:0 0px 1px 1px;height:100px;"
+                                         alt="user"/>
+                                </ng-container>
+                                <ng-container *ngIf="cartItem?.item?.preview">
+                                    <img class="img-thumbnail img-responsive"
+                                         style="top:5px;left:2px;box-shadow:0px 0px 1px 1px;height:100px;"
+                                         [src]="getImageUrl(cartItem?.item?.preview)"
+                                         alt="No results found">
+                                </ng-container>
+                            </td>
+                            <ng-container *ngIf="!merchants[cartItem?.item?._id]">
+                                <td class="headtitle"> no merchants found for this item</td>
+                            </ng-container>
+                            <ng-container *ngIf="merchants[cartItem?.item?._id]">
+                                <td class="headtitle" colspan="2">Merchants</td>
+                                <td class="headtitle" colspan="2"> Price</td>
+                                <td class="headtitle"> stock</td>
+                                <td class="headtitle"> Conformation</td>
+                                <td></td>
+                            </ng-container>
+                        </tr>
+                        <ng-container *ngIf="merchants[cartItem?.item?._id]">
+                            <tr *ngFor="let merchant of merchants[cartItem?.item?._id];">
+                                <td colspan="2">
+                                    <div class="info-box-wrapper line-height-22">
+                                        <a class="font-weight-600 text-meteorite mb-0">
+                                            {{merchant?.merchantName}} ({{merchant?.shopName}})
+                                        </a>
+                                        <p class="text-11 font-weight-500 mb-0 line-height-20">Phone: <span>
+                                                {{merchant?.phone}} </span></p>
+                                        <p class="text-11 font-weight-500 mb-0 line-height-20">pinCode: <span>
+                                                {{merchant?.pinCode}} </span></p>
+                                        <p class="text-11 font-weight-500 mb-0 line-height-20">Distance: <span>
+                                               {{this.convertMiterToKm(merchant?.distance)}} KM</span></p>
+                                    </div>
+                                </td>
+                                <td class="ng-binding" colspan="2">
+                                    <search-text type="number" [value]="merchant.itemPrice" placeholder="price"
+                                                 name="price"
+                                                 (keyupMethod)="onPriceChange(cartItem, merchant.id, $event)"
+                                                 (changeMethod)="onPriceChange(cartItem, merchant.id, $event)"></search-text>
+                                    <div *ngIf="inputBoxError[merchant.id]&& inputBoxError[merchant.id].length>0"
+                                         class="error-feedback">
+                                        <div> {{inputBoxError[merchant.id]}}</div>
+                                    </div>
+                                </td>
+                                <td class="ng-binding">
+                        <span [style.background-color]=" color[merchant.isDeleted]"
+                              class="badge badge-secondary mt-2">{{ merchant.isDeleted ? "Not Available" : "Available"  }}</span>
+                                </td>
+                                <td class="ng-binding" (click)="conformation(merchant.id, !merchant.conformation)">
+                                    <ng-container *ngIf="!merchant.conformation && !buttonFlag[merchant.id]">
+                                        <i *ngIf="!buttonFlag[merchant.id]" style="font-size: 15px"
+                                           class="text-danger fas fa-times-circle">
+                                        </i>
+
+                                    </ng-container>
+                                    <ng-container *ngIf="merchant.conformation && !buttonFlag[merchant.id] ">
+                                        <i style="font-size: 15px" class="text-success fas fa-check-circle"></i>
+                                    </ng-container>
+
+                                    <i *ngIf="buttonFlag[merchant.id]" class="fa fa-spinner fa-spin">
+                                    </i>
+
+                                </td>
+                                <td style="vertical-align:middle;">
+                                    <button type="button" (click)="stock(merchant.id, !merchant.isDeleted)"
+                                            [style.background-color]=" color[!merchant.isDeleted]"
+                                            class="badge badge-secondary mt-2">{{ merchant.isDeleted ? "Available" : "Not Available"  }}</button>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        </tbody>
+                    </table>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

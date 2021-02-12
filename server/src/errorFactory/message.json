@@ -1,0 +1,13 @@
+{
+  "DEACTIVATE_ACCOUNT": "Your account is deactivated, please contact admin to activate your account",
+  "VERIFY_ACCOUNT": "Please verify account",
+  "UNAUTHORIZED_REQUEST": "Unauthorized request",
+  "INVALID_REQUEST": "Invalid request",
+  "INVALID_REGISTER_USER_REQUEST": "Invalid register user request",
+  "MISSING_INFORMATION": "Invalid request",
+  "INVALID_PHONE_PASSWORD": "Invalid phone or password.",
+  "INVALID_PHONE": "Invalid phone",
+  "INVALID_LINK": "Invalid otp",
+  "LINK_EXPIRED": "Otp expired",
+  "OTP_WILL_SEND_AFTER_SOMETIME": "Otp will send after some time"
+}

@@ -1,0 +1,32 @@
+<div class="modal-header">
+    <h6 class="modal-title" id="exampleModalLongTitle">Update Item</h6>
+    <button type="button" class="close" (click)="close()" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="form-group">
+        <h6 class=" ">{{item?.name}} {{item.quantity}} {{item.unit}} </h6>
+    </div>
+    <div class="form-group">
+        <label for="price">Add Price</label><input name="price"
+                                                   (keyup)="onPriceChange()"
+                                                   (change)="onPriceChange()"
+                                                   type="number"
+                                                   [(ngModel)]="price"
+                                                   class="form-control"
+                                                   id="price"
+                                                   placeholder="price"/>
+        <div *ngIf="error.length>0" class="error-feedback">
+            <div> {{error}}</div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button id="createMeetingModelClose" type="button"
+            class="btn btn-danger" data-dismiss="modal" (click)="close()">
+        Cancel
+    </button>
+    <button [disabled]="submitForm" (click)="updateMerchantItems()" type="submit" class="btn btn-primary">
+        Submit <i *ngIf="submitForm" class="fa fa-spinner fa-spin"></i></button>
+</div>

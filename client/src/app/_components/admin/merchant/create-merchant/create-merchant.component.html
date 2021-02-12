@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-2 no-padding-right">
+        <h6 class="navbar-heading">Merchant</h6>
+        <nav class="navbar navbar-card ht-auto navbar-vertical">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active"
+                       routerLink="/admin/merchant/info">Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active"
+                       routerLink="/admin/merchant/info/category">Category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" routerLink="/admin/merchant/info/item">Item</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" routerLink="/admin/merchant/info/addCategory"> Add
+                        new Category</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active" routerLink="/admin/merchant/info/addItem"> Add
+                        new Item</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="col-md-10">
+        <router-outlet></router-outlet>
+    </div>
+</div>

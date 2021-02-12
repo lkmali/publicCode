@@ -1,0 +1,8 @@
+<input [name]="name"
+       (change)="onChange($event.target.value)"
+       (keyup)="onKeyUp($event.target.value)"
+       [type]="type"
+       [id]="name"
+       style="width: 100%; height: 100%"
+       [(ngModel)]="value"
+       [placeholder]="placeholder"/>

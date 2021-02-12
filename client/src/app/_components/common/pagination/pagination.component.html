@@ -1,0 +1,21 @@
+<div class="row mt-2">
+    <div class="col-sm-6 full_page_counter">
+        <div class="dataTables_length" id="DataTables_Table_0_length">
+            <label class="mr-3">
+                <select name="DataTables_Table_0_length" [(ngModel)]="filter.pageSize" (change)="filterChanged(true)" aria-controls="DataTables_Table_0" class="form-control">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="20">20</option>
+                </select>
+            </label>
+            <label> Showing <strong>{{(filter.pageIndex - 1) * filter.pageSize + 1}}</strong>-<strong>{{filter.pageIndex * filter.pageSize > totalItems ? totalItems : filter.pageIndex * filter.pageSize}}</strong> of <strong>{{totalItems}}</strong></label>
+        </div>
+        <div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite"></div>
+    </div>
+    <div class="col-sm-6 main_pageing text-right">
+        <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
+            <pagination [totalItems]="totalItems" [maxSize]="3" [itemsPerPage]="filter.pageSize"  [boundaryLinks]="true" (pageChanged)="CurrentPage = $event.page; filterChanged(false)" [(ngModel)]="CurrentPage" aria-label="Default pagination"></pagination>
+        </div>
+    </div>
+</div>

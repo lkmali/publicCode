@@ -1,0 +1,141 @@
+<div class="card">
+    <div class="card-header pb-3">
+        <div class="media align-items-center">
+            <h6 class="mb-0">Item</h6>
+            <ng-container *ngIf="categoryId">
+                <button style="margin: 10px" type="submit" class="btn btn-primary btn-sm ml-auto"
+                        (click)="createItem()">
+                    <i class="fa fa-plus"></i>
+                    <span class="d-none d-lg-inline-block ml-1">Create </span></button>
+            </ng-container>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group mb-3 custome-search">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+                    </div>
+                    <input (keyup)="onSearch($event)" type="text" class="form-control" [(ngModel)]="searchText"
+                           placeholder="Search"
+                           aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 pt-3 text-center">
+            <div *ngIf="item.length<1" class="col-12 pt-3 text-center">
+                <i *ngIf="gettingItem" class="fa fa-spinner fa-spin"></i>
+                <ng-container *ngIf="!gettingItem">
+                    <p class="text-muted">No Item available to show</p>
+                </ng-container>
+            </div>
+        </div>
+
+        <ng-container *ngIf="item.length>0">
+            <table class="table table-hover table-striped" style="width: 100%">
+                <tbody>
+                <tr>
+                    <th><label>
+                        <input id="checkAlBox" [checked]="allCheck" type="checkbox" (change)="checkAllBox()"/>
+                    </label></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <td>
+                        <button [disabled]="buttonFlag['Activate'] || false"
+                                (click)="sendMultipleRequest({isDeleted: false}, 'Activate')" class="btn btn-primary">
+                            <i
+                                    *ngIf="buttonFlag['Activate'] || false" class="fa fa-spinner fa-spin"></i> Activate
+                        </button>
+                    </td>
+                    <td>
+                        <button [disabled]="buttonFlag['Activate'] || false"
+                                (click)="sendMultipleRequest({isDeleted: true}, 'Deactivate')" class="btn btn-primary">
+                            <i
+                                    *ngIf="buttonFlag['Deactivate'] || false" class="fa fa-spinner fa-spin"></i>
+                            Deactivate
+                        </button>
+                    </td>
+                    <td>
+                        <button [disabled]="buttonFlag['UN_AVAILABLE'] || false"
+                                (click)="sendMultipleRequest({stock: 'UN_AVAILABLE'}, 'UN_AVAILABLE')"
+                                class="btn btn-primary">
+                            <i
+                                    *ngIf="buttonFlag['UN_AVAILABLE'] || false" class="fa fa-spinner fa-spin"></i> Un
+                            Available
+                        </button>
+                    </td>
+                    <td>
+                        <button [disabled]="buttonFlag['AVAILABLE'] || false"
+                                (click)="sendMultipleRequest({stock: 'AVAILABLE'}, 'AVAILABLE')"
+                                class="btn btn-primary">
+                            <i
+                                    *ngIf="buttonFlag['AVAILABLE'] || false" class="fa fa-spinner fa-spin"></i>
+                            Available
+                        </button>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th><b>Image</b></th>
+                    <th></th>
+                    <th><b>Name</b></th>
+                    <th><b>Status</b></th>
+                    <th><b>Stock Status</b></th>
+                    <th><b></b></th>
+                    <th><b></b></th>
+                    <th><b></b></th>
+                </tr>
+                <tr *ngFor="let data of item; let i = index;">
+                    <td>
+                        <label>
+                            <input type="checkbox" [checked]="data.isChecked"
+                                   (change)="checkSingleBox(i)"/>
+                        </label>
+                    </td>
+
+                    <td>
+                        <div class="itemImage px-2 mb-3">
+                            <ng-container *ngIf="!data.preview">
+                                <img src="../../../../../assets/images/avatar-default.png" class=" " alt="user"/>
+                            </ng-container>
+                            <ng-container *ngIf="data.preview">
+                                <img width="100px" height="100Px" class="mb-4" [src]="getImageUrl(data.preview)"
+                                     alt="No results found">
+                            </ng-container>
+
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>{{data?.name}}</td>
+                    <td *ngIf="data.isDeleted"><i style="font-size: 15px" class="text-danger fas fa-times-circle"></i>
+                    </td>
+                    <td *ngIf="!data.isDeleted"><i style="font-size: 15px"
+                                                   class="text-success fas fa-check-circle"></i></td>
+                    <td>{{data?.stock}}</td>
+                    <td>
+                        <button (click)="DeleteItem(data)" class="btn btn-primary">
+                            {{data.isDeleted ? "Activate" : "Deactivate"}} </button>
+                    </td>
+                    <td>
+                        <button style="margin-left: 20px" (click)="ViewItem(data?._id)"
+                                class="btn btn-primary">
+                            Edit
+                        </button>
+                    </td>
+                    <td>
+                        <button (click)="ChangeStock(data)" class="btn btn-primary">
+                            {{this.stock[data?.stock]}} </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <app-pagination [totalItems]="totalItems" [pageSize]="10" (onPageChange)="pageChanged($event)">
+            </app-pagination>
+        </ng-container>
+    </div>
+</div>

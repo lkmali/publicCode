@@ -1,0 +1,92 @@
+<div class="card">
+    <div class="card-header pb-3">
+        <div class="media align-items-center">
+            <h6 class="mb-0">Category</h6>
+            <div style="margin: 10px" class="mb-0"><input type="file" class="mb-0" id="file"
+                                                          (change)="onFileChange($event)"></div>
+            <button [disabled]="!fileToUpload || loader" type="submit" class="btn btn-primary btn-sm ml-auto"
+                    (click)="saveCategoryFile()">
+                <i class="fa fa-upload"> </i>
+                <span class="d-none d-lg-inline-block ml-1">Upload <i *ngIf="loader" class="fa fa-spinner fa-spin"></i></span>
+            </button>
+            <button style="margin: 10px" type="submit" class="btn btn-primary btn-sm ml-auto"
+                    [routerLink]="['create']">
+                <i class="fa fa-plus"></i>
+                <span class="d-none d-lg-inline-block ml-1">Create </span></button>
+
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group mb-3 custome-search">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+                    </div>
+                    <search-text (keyupMethod)="onSearch($event)" type="text"
+                                 [value]="searchText"
+                                 placeholder="Search"
+                                 name="search"
+                                 class="form-control"
+                                 aria-label="Username" aria-describedby="basic-addon1"></search-text>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 pt-3 text-center">
+            <div *ngIf="category.length<1" class="col-12 pt-3 text-center">
+                <i *ngIf="gettingCategory" class="fa fa-spinner fa-spin"></i>
+                <ng-container *ngIf="!gettingCategory">
+                    <p class="text-muted">No Category available to show</p>
+                </ng-container>
+            </div>
+        </div>
+
+        <ng-container *ngIf="category.length>0">
+            <table class="table table-hover table-striped" style="width: 100%">
+                <tbody>
+                <tr>
+                    <th><b>Image</b></th>
+                    <th></th>
+                    <th><b>Name</b></th>
+                    <th><b>status</b></th>
+                    <th><b></b></th>
+                </tr>
+                <tr *ngFor="let data of category; let i = index;">
+                    <td>
+                        <div class="itemImage px-2 mb-3">
+                            <ng-container *ngIf="!data.preview">
+                                <img src="../../../../assets/images/avatar-default.png" class=" " alt="user"/>
+                            </ng-container>
+                            <ng-container *ngIf="data.preview">
+                                <img width="100px" height="100Px" class="mb-4" [src]="getImageUrl(data.preview)"
+                                     alt="No results found">
+                            </ng-container>
+                        </div>
+                    </td>
+                    <td></td>
+                    <td>{{data?.name}}</td>
+                    <td *ngIf="data.isDeleted"><i style="font-size: 15px" class="text-danger fas fa-times-circle"></i>
+                    </td>
+                    <td *ngIf="!data.isDeleted"><i style="font-size: 15px"
+                                                   class="text-success fas fa-check-circle"></i></td>
+                    <td>
+                        <button (click)="DeleteCategory(data)" data-toggle="modal"
+                                data-target="#deleteMeetingModel" class="btn btn-primary">
+                            {{data.isDeleted ? "Activate" : "Deactivate"}} </button>
+                        <button style="margin-left: 20px" [routerLink]="['edit/'+ data?._id]" class="btn btn-primary">
+                            Edit
+                        </button>
+                        <button style="margin-left: 20px" [routerLink]="['item/'+ data?._id]" class="btn btn-primary">
+                            View Item
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <app-pagination [totalItems]="totalItems" [pageSize]="10" (onPageChange)="pageChanged($event)">
+            </app-pagination>
+        </ng-container>
+    </div>
+</div>

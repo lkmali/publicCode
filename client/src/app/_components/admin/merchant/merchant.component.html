@@ -1,0 +1,77 @@
+<div class="card">
+    <div class="card-header pb-3">
+        <div class="media align-items-center">
+            <h6 class="mb-0">Merchant</h6>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="input-group mb-3 custome-search">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-search" aria-hidden="true"></i></span>
+                    </div>
+                    <input (keyup)="onSearch($event)" type="text" class="form-control" [(ngModel)]="searchText"
+                           placeholder="Search"
+                           aria-label="Username" aria-describedby="basic-addon1">
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-12 pt-3 text-center">
+            <div *ngIf="merchant.length<1" class="col-12 pt-3 text-center">
+                <i *ngIf="gettingMerchant" class="fa fa-spinner fa-spin"></i>
+                <ng-container *ngIf="!gettingMerchant">
+                    <p class="text-muted">No Merchant available to show</p>
+                </ng-container>
+            </div>
+        </div>
+
+        <ng-container *ngIf="merchant.length>0">
+            <table class="table table-hover table-striped" style="width: 100%">
+                <tbody>
+                <tr>
+                    <th><b>Name</b></th>
+                    <th><b>Area</b></th>
+                    <th><b>Pin Code</b></th>
+                    <th><b>Phone</b></th>
+                    <th><b>status</b></th>
+                    <th><b></b></th>
+                </tr>
+                <tr *ngFor="let data of merchant; let i = index;">
+                    <td>{{data?.name}}</td>
+                    <td>{{data?.area}}</td>
+                    <td>{{data?.pinCode}}</td>
+                    <td>{{data?.phone}}</td>
+
+                    <td *ngIf="data.isDeleted"><i style="font-size: 15px" class="text-danger fas fa-times-circle"></i>
+                    </td>
+                    <td *ngIf="!data.isDeleted"><i style="font-size: 15px"
+                                                   class="text-success fas fa-check-circle"></i></td>
+                    <td>
+                        <button (click)="ActiveMerchant(data)"
+                                class="btn btn-sm btn-outline-secondary mr-2"
+                                *ngIf="data.isDeleted == null || data.isDeleted == false"><i style="font-size: 15px"
+                                                                                             class="text-danger fas fa-times-circle">&nbsp;</i>
+                        </button>
+                        <button (click)="ActiveMerchant(data)"
+                                class="btn btn-sm btn-outline-secondary mr-2" *ngIf="data.isDeleted == true"><i
+                                style="font-size: 15px" class="text-success fas fa-check-circle">&nbsp;</i></button>
+                        <button (click)="viewMerchant(data?._id)"
+                                class="btn btn-sm btn-outline-secondary mr-2"><i style="font-size: 15px"
+                                                                                 class="text-success fas fa fa-eye"
+                                                                                 aria-hidden="true"></i></button>
+                        <button (click)="DeleteMerchant(data)" data-toggle="modal"
+                                class="btn btn-sm btn-outline-secondary mr-2"><i style="font-size: 15px"
+                                                                                 class="  far fa-trash-alt text-danger"> </i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <app-pagination [totalItems]="totalItems" [pageSize]="10" (onPageChange)="pageChanged($event)">
+            </app-pagination>
+        </ng-container>
+    </div>
+</div>

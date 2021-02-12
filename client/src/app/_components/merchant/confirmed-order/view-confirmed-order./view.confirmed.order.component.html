@@ -1,0 +1,92 @@
+<div class="card">
+    <div class="card-header pb-3">
+        <div class="media align-items-center">
+            <h6 class="mb-0">Conform Order</h6>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="col-12 pt-3 text-center">
+            <ng-container *ngIf="gettingOrder">
+                <i class="fa fa-spinner fa-spin"></i>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="orderDelivery && orderDelivery.merchant && orderDelivery.merchant.status==='Confirmed'">
+            <div class="success" style="  margin-bottom: 15px;padding: 4px 12px;">
+                <p><strong>Important Note :</strong></p>
+                <ol>
+                    <li>Please Pack the below mention conformed product as per requirement delivery boy will contact you
+                        shortly.
+                    </li>
+                    <li>The below mention conformed product are Needed With Same Quality as per Requirement.</li>
+                </ol>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="orderDelivery && orderDelivery.merchant && orderDelivery.merchant.status==='Rejected'">
+            <div class="danger" style="  margin-bottom: 15px;padding: 4px 12px;">
+                <p><strong>Important Note :</strong></p>
+                <ol>
+                    <li>Sorry Order Got Rejected Due to High Rates.
+                    </li>
+                    <li>Please Give us a Fair and Reasonable Price
+                        Thank you!
+                    </li>
+                    <li>The below mention product delivered by other merchant as mention Price</li>
+                </ol>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="!gettingOrder">
+            <table class="table table-hover table-striped" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let merchantItem of merchantCart; let i=index"
+                       style="margin-top: 10px; ">
+                <tr>
+                    <td>
+                        <div class="itemImage px-2 mb-3">
+                            <ng-container *ngIf="!merchantItem.cart?.item?.preview">
+                                <img src="../../../../../assets/images/avatar-default.png" class=" "
+                                     alt="user"/>
+                            </ng-container>
+                            <ng-container *ngIf="merchantItem.cart?.item?.preview">
+                                <img width="100px" height="100Px" class="mb-4"
+                                     [src]="getImageUrl(merchantItem.cart?.item?.preview)"
+                                     alt="No results found">
+                            </ng-container>
+
+                        </div>
+                    </td>
+                    <td>{{merchantItem.cart?.item?.name}}({{merchantItem?.cart?.weight}})</td>
+                    <td>{{merchantItem.cart.quantity}}</td>
+                    <td>
+                        {{merchantItem.itemPrice}}
+                    </td>
+                    <td>
+                        <span [style.background-color]="color[merchantItem.status]"
+                              class="badge badge-secondary  mt-2">{{merchantItem.status}}</span>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </ng-container>
+    </div>
+
+    <!-- <div class="modal-footer">
+         <ng-container *ngIf="!gettingOrder">
+             <button [disabled]="submit" id="newTestForm" type="submit"
+                     (click)="conformAllItemByMerchant()"
+                     class="btn btn-sm btn-primary"> Save
+                 <i *ngIf="submit" class="fa fa-spinner fa-spin"></i>
+             </button>
+         </ng-container>
+
+     </div>-->
+</div>

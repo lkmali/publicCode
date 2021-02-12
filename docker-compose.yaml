@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+    mtc:
+        build:
+            context: ./
+            dockerfile: dockerfile
+        container_name: mtc
+        ports:
+            - "10010:10010"
+        environment:
+            - ALLOWED_ORIGINS=$ALLOWED_ORIGINS
+            - MONGO_URI=$MONGO_URI
+            - SERVER_PORT=10010
+            - WEB=$WEB
+            - SWAGGER_HOST=$SWAGGER_HOST
+        volumes: 
+            - server_logs:/usr/src/app/server/logs
+
+volumes:
+    server_logs:
